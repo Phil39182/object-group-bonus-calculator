@@ -108,11 +108,10 @@ console.log('testing calculateAll', calculateAll());
 
 function displayBonus() {
   let el = $('#bonusDataOutput');
-  for ( let i = 0; i <= bonusData.length ; i ++) {
-
-    el.append(`<li>` + bonusData[i] + `</li>`);
+  for ( let i = 0; i < bonusData.length ; i ++) {
+    el.append(`<li>` + bonusData[i].name + `</li>`);
   }
   //return 'in displayBonus outside loop';
 }
 
-console.log('testing displayBonus', displayBonus());
+//console.log('testing displayBonus', displayBonus());
