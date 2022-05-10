@@ -1,3 +1,10 @@
+$(document).ready(readyNow);
+
+function readyNow() {
+  $(`#runCalculateAll`).on( 'click', calculateAll );
+  $(`#runCalculateAll`).on( 'click', displayBonus );
+}
+
 const employees = [
   {
     name: 'Atticus',
@@ -40,3 +47,72 @@ const employees = [
 // Ask questions when you don't.
 
 console.log( employees );
+
+function calculateBonus( emplObject) {
+  let bonusPercentage = 0;
+  let bonusPercentageMax = .13;
+  let bonusPercentageMin = 0;
+  if ( emplObject.reviewRating <= 2 ) {
+    bonusPercentage = 0;
+  }
+  else if ( emplObject.reviewRating === 3 ) {
+    bonusPercentage = .04;
+  }
+  else if ( emplObject.reviewRating === 4 ) {
+    bonusPercentage = .06;
+  }
+  else if ( emplObject.reviewRating === 5 ) {
+    bonusPercentage = .1;
+  }
+// return bonusPercentage; PASS THIS INTO OBJECT AT END
+
+if ( Number(emplObject.employeeNumber) > 999 && Number(emplObject.employeeNumber) < 9999 ) {
+  bonusPercentage += .05;
+}
+
+if ( emplObject.annualSalary > 65000 ) {
+  bonusPercentage -= 1;
+}
+
+if ( bonusPercentage > bonusPercentageMax ) {
+  bonusPercentage = bonusPercentageMax;
+}
+else if ( bonusPercentage < bonusPercentageMin ) {
+  bonusPercentage = bonusPercentageMin;
+}
+let totalBonus = Number(emplObject.annualSalary) * bonusPercentage; 
+let totalCompensation = totalBonus + Number(emplObject.annualSalary); 
+let something = {
+  name: emplObject.name,
+  bonusPercentage,
+  totalCompensation,
+  totalBonus,
+}
+console.log(something); 
+return something;
+}
+
+let bonusData = []; 
+
+function calculateAll () {
+  for (let employee of employees){
+
+    bonusData.push(calculateBonus (employee));
+    
+  //  console.log(something); 
+  }
+  return bonusData;
+}
+
+console.log('testing calculateAll', calculateAll());
+
+function displayBonus() {
+  let el = $('#bonusDataOutput');
+  for ( let i = 0; i <= bonusData.length ; i ++) {
+
+    el.append(`<li>` + bonusData[i] + `</li>`);
+  }
+  //return 'in displayBonus outside loop';
+}
+
+console.log('testing displayBonus', displayBonus());
